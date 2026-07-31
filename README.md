@@ -1,4 +1,13 @@
 # 🚀 LifePilot AI
+![n8n](https://img.shields.io/badge/n8n-Workflow-orange?style=for-the-badge&logo=n8n)
+
+![Gemini](https://img.shields.io/badge/Gemini-AI-blue?style=for-the-badge&logo=google)
+
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript)
+
+![Status](https://img.shields.io/badge/Status-Under%20Development-success?style=for-the-badge)
+
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 > Your Autonomous Personal Productivity AI Agent
 
