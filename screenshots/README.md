@@ -10,4 +10,4 @@ This folder contains screenshots of the LifePilot AI project during development.
 - Google Calendar Integration
 - Gmail Automation
 - AI Chat
-- Final Project Demo
+- Final Project Demo+
