@@ -1,6 +1,6 @@
 export async function sendMessage(message: string) {
   const response = await fetch(
-    "YOUR_N8N_WEBHOOK_URL",
+    process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || "",
     {
       method: "POST",
       headers: {
