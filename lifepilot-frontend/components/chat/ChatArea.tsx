@@ -5,10 +5,11 @@ import Header from "../layout/Header";
 import MessageList from "./MessageList";
 import ChatInput from "./ChatInput";
 import { ChatMessage } from "@/types/chat";
-import { sendMessage } from "@/services/api";
+import { sendMessageToLifePilot } from "@/services/api";
 
 export default function ChatArea() {
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -19,7 +20,7 @@ export default function ChatArea() {
   ]);
 
   async function handleSend() {
-    if (!input.trim()) return;
+    if (!input.trim() || isLoading) return;
 
     const userText = input;
 
@@ -31,23 +32,14 @@ export default function ChatArea() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
-
-    // Clear input
     setInput("");
+    setIsLoading(true);
 
     try {
-      // Send message to n8n
-      const response = await sendMessage(userText);
+      // Send message to n8n backend
+      const aiReply = await sendMessageToLifePilot(userText);
 
-      console.log("API Response:", response);
-
-      // Extract AI response
-      const aiReply =
-        response.output ||
-        response.reply ||
-        response.text ||
-        response.message ||
-        "No response received from LifePilot.";
+      console.log("API Response:", aiReply);
 
       const assistantMessage: ChatMessage = {
         id: Date.now() + 1,
@@ -62,16 +54,17 @@ export default function ChatArea() {
       const errorMessage: ChatMessage = {
         id: Date.now() + 1,
         role: "assistant",
-        content:
-          "⚠️ Sorry, I couldn't connect to the LifePilot backend.",
+        content: "⚠️ Sorry, I couldn't connect to the LifePilot backend.",
       };
 
       setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-1 flex-col h-full">
       <Header />
 
       <MessageList messages={messages} />
