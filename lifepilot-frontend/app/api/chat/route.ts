@@ -4,6 +4,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
+    // Replace this with the exact Production Webhook URL from n8n
     const n8nWebhookUrl =
       process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL ||
       'https://lifepilot-n8n.onrender.com/webhook/chat';
