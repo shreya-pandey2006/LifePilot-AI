@@ -1,0 +1,235 @@
+{
+  "updatedAt": "2026-08-08T11:28:56.257Z",
+  "createdAt": "2026-08-02T08:08:19.207Z",
+  "id": "GyWWQH0ApifJM7VW",
+  "name": "LifePilot - Task Create",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "title"
+            },
+            {
+              "name": "description"
+            },
+            {
+              "name": "priority"
+            },
+            {
+              "name": "due_date"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7e439c04-b482-4b00-91ab-dd8451f91de2",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg",
+          "mode": "list",
+          "cachedResultName": "LifePilot Tasks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Tasks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "task_id": "={{Math.floor(Date.now() / 1000)}}",
+            "title": "={{$json.title}}",
+            "description": "={{$json.description}}",
+            "priority": "={{$json.priority}}",
+            "status": "Pending",
+            "due_date": "={{$json.due_date}}",
+            "created_at": "={{ $now.toFormat('yyyy-MM-dd HH:mm:ss') }}",
+            "is_deleted": "false"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "task_id",
+              "displayName": "task_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "due_date",
+              "displayName": "due_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "completed_at",
+              "displayName": "completed_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "is_deleted",
+              "displayName": "is_deleted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a74e9718-ce35-4c41-8743-8cc5c7e413df",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "COcIsaNLIrxN3mMN",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "2af42335-d846-43f3-8019-48f2028b1e25",
+  "activeVersionId": "8e22496b-55ea-4ef6-8a16-a5f4085a9ba4",
+  "versionCounter": 48,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-08-02T08:08:19.224Z",
+      "createdAt": "2026-08-02T08:08:19.224Z",
+      "role": "workflow:owner",
+      "workflowId": "GyWWQH0ApifJM7VW",
+      "projectId": "ATf8yI9oXmo7oM2E",
+      "project": {
+        "updatedAt": "2026-07-31T17:36:01.364Z",
+        "createdAt": "2026-07-31T17:19:50.159Z",
+        "id": "ATf8yI9oXmo7oM2E",
+        "name": "Shreya Pandey <shreyapandey.tech@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "9f594285-a90e-4a3a-84d3-8af680fd21b4"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

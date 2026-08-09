@@ -1,0 +1,269 @@
+{
+  "updatedAt": "2026-08-04T06:54:18.776Z",
+  "createdAt": "2026-08-02T10:41:33.994Z",
+  "id": "R7VGQXJ3YlG5PzVw",
+  "name": "LifePilot - Task Complete",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "title"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -32,
+        -112
+      ],
+      "id": "ca2ed0ba-4244-4a91-bc79-cf147b0388de",
+      "name": "When Executed by Another Workflow",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg",
+          "mode": "list",
+          "cachedResultName": "LifePilot Tasks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Tasks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "completed_at": "={{ $now }}",
+            "status": "Completed",
+            "title": "={{ $('When Executed by Another Workflow').item.json.title }}"
+          },
+          "matchingColumns": [
+            "title"
+          ],
+          "schema": [
+            {
+              "id": "task_id",
+              "displayName": "task_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "due_date",
+              "displayName": "due_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "completed_at",
+              "displayName": "completed_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        -112
+      ],
+      "id": "026dff82-9ec3-4d77-8e57-7c5d020fad23",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "COcIsaNLIrxN3mMN",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "62dc4eb0-19f2-4b40-b63a-6dc7c6966122",
+              "name": "success",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "1b668503-a0f9-497d-9a17-3de947846933",
+              "name": "message",
+              "value": "Task marked as completed.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        592,
+        -112
+      ],
+      "id": "2f0f0045-5d1e-492d-91ac-aaf6a761d250",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "623ae10d-20fc-4891-af69-733ec67ccb65",
+  "activeVersionId": "623ae10d-20fc-4891-af69-733ec67ccb65",
+  "versionCounter": 49,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-08-02T10:41:34.005Z",
+      "createdAt": "2026-08-02T10:41:34.005Z",
+      "role": "workflow:owner",
+      "workflowId": "R7VGQXJ3YlG5PzVw",
+      "projectId": "ATf8yI9oXmo7oM2E",
+      "project": {
+        "updatedAt": "2026-07-31T17:36:01.364Z",
+        "createdAt": "2026-07-31T17:19:50.159Z",
+        "id": "ATf8yI9oXmo7oM2E",
+        "name": "Shreya Pandey <shreyapandey.tech@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "9f594285-a90e-4a3a-84d3-8af680fd21b4"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "Version 623ae10d",
+    "description": ""
+  }
+}

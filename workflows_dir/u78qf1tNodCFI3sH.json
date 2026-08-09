@@ -1,0 +1,125 @@
+{
+  "updatedAt": "2026-08-02T13:02:21.731Z",
+  "createdAt": "2026-08-02T06:57:44.747Z",
+  "id": "u78qf1tNodCFI3sH",
+  "name": "LifePilot - Memory Read",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "key"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "b1201ae3-209f-423d-a6df-bb3955f7b15b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "12xxthJTPw-adAhkyAXKO22jbZigCzJ1LUzQYpjhgMgw",
+          "mode": "list",
+          "cachedResultName": "Memory",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12xxthJTPw-adAhkyAXKO22jbZigCzJ1LUzQYpjhgMgw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12xxthJTPw-adAhkyAXKO22jbZigCzJ1LUzQYpjhgMgw/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "key",
+              "lookupValue": "={{ $('When Executed by Another Workflow').item.json.key }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        144,
+        -16
+      ],
+      "id": "48b13ae3-298c-4d53-a589-8526f8dcf688",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "COcIsaNLIrxN3mMN",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "86ebd44b-573d-452f-9d0b-be362af39e89",
+  "activeVersionId": "86ebd44b-573d-452f-9d0b-be362af39e89",
+  "versionCounter": 10,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-08-02T06:57:44.749Z",
+      "createdAt": "2026-08-02T06:57:44.749Z",
+      "role": "workflow:owner",
+      "workflowId": "u78qf1tNodCFI3sH",
+      "projectId": "ATf8yI9oXmo7oM2E",
+      "project": {
+        "updatedAt": "2026-07-31T17:36:01.364Z",
+        "createdAt": "2026-07-31T17:19:50.159Z",
+        "id": "ATf8yI9oXmo7oM2E",
+        "name": "Shreya Pandey <shreyapandey.tech@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "9f594285-a90e-4a3a-84d3-8af680fd21b4"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "Version 86ebd44b",
+    "description": ""
+  }
+}

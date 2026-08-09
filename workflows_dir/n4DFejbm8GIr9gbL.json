@@ -1,0 +1,184 @@
+{
+  "updatedAt": "2026-08-02T07:09:00.719Z",
+  "createdAt": "2026-08-02T05:08:50.374Z",
+  "id": "n4DFejbm8GIr9gbL",
+  "name": "LifePilot - Memory Save",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "key"
+            },
+            {
+              "name": "value"
+            },
+            {
+              "name": "category"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -144,
+        -16
+      ],
+      "id": "5a9ad5c3-ed5a-4304-81ba-e64e052eb986",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "12xxthJTPw-adAhkyAXKO22jbZigCzJ1LUzQYpjhgMgw",
+          "mode": "list",
+          "cachedResultName": "Memory",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12xxthJTPw-adAhkyAXKO22jbZigCzJ1LUzQYpjhgMgw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12xxthJTPw-adAhkyAXKO22jbZigCzJ1LUzQYpjhgMgw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "key": "={{ $('When Executed by Another Workflow').item.json.key }}",
+            "value": "={{ $('When Executed by Another Workflow').item.json.value }}",
+            "cattegory": "={{ $('When Executed by Another Workflow').item.json.category }}",
+            "created_at": "={{ $now }}",
+            "updated_at": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "key",
+              "displayName": "key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "value",
+              "displayName": "value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cattegory",
+              "displayName": "cattegory",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        112,
+        -16
+      ],
+      "id": "842915a6-27e0-4741-b357-0e3e66eec4be",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "COcIsaNLIrxN3mMN",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "11642f85-a9e0-4bac-9f99-1de74bb10915",
+  "activeVersionId": "11642f85-a9e0-4bac-9f99-1de74bb10915",
+  "versionCounter": 51,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-08-02T05:08:50.384Z",
+      "createdAt": "2026-08-02T05:08:50.384Z",
+      "role": "workflow:owner",
+      "workflowId": "n4DFejbm8GIr9gbL",
+      "projectId": "ATf8yI9oXmo7oM2E",
+      "project": {
+        "updatedAt": "2026-07-31T17:36:01.364Z",
+        "createdAt": "2026-07-31T17:19:50.159Z",
+        "id": "ATf8yI9oXmo7oM2E",
+        "name": "Shreya Pandey <shreyapandey.tech@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "9f594285-a90e-4a3a-84d3-8af680fd21b4"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "Version 11642f85",
+    "description": ""
+  }
+}

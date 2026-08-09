@@ -1,0 +1,1019 @@
+{
+  "updatedAt": "2026-08-09T14:21:17.575Z",
+  "createdAt": "2026-07-31T17:42:08.162Z",
+  "id": "iIDeXVMThn1Fgfoa",
+  "name": "LifePilot AI - Brain",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=={{ $json.chatInput }}\n\nWORKFLOW DATE INFORMATION:\nCurrent date: {{ $json.currentDate }}\nCurrent time: {{ $json.currentTime }}\nTimezone: {{ $json.timezone }}\nTomorrow date: {{ $json.tomorrowDate }}\nTomorrow at 7 PM: {{ $json.tomorrowAt7PM }}",
+        "options": {
+          "systemMessage": "=You are LifePilot, an autonomous personal productivity assistant.\n\nPrimary Role:\n- Execute user requests by calling the appropriate tool when an action is needed.\n- Return a clear, concise confirmation once the tool execution finishes.\n\nDate & Time Handling:\n- Use provided workflow variables for all date and time parameters (e.g., currentDate, currentTime, timezone, tomorrowDate).\n- Convert ISO timestamps to simple YYYY-MM-DD HH:mm format without offset strings or milliseconds.\n\nTask Creation Guidelines:\n- Title: Short descriptive title as requested.\n- Priority: Select strictly from \"High\", \"Medium\", or \"Low\".\n- Due Date: Follow the YYYY-MM-DD HH:mm format precisely.\n\nOutput Rule:\n- Focus on tool execution first. Do not display internal reasoning or thought processes. Keep responses direct and helpful.\n-"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0d7f6de6-0720-4a38-b1ac-879e88fedb94",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool to schedule, create, or add a new meeting or event to Google Calendar.",
+        "calendar": {
+          "__rl": true,
+          "value": "shreyapandey.tech@gmail.com",
+          "mode": "list",
+          "cachedResultName": "shreyapandey.tech@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `The start time of the event in ISO format (e.g. YYYY-MM-DDTHH:mm:ss)`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `The end time of the event in ISO format (e.g. YYYY-MM-DDTHH:mm:ss)`, 'string') }}",
+        "additionalFields": {
+          "attendees": [],
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "location": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Location', ``, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', `The title or summary of the event.`, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        400
+      ],
+      "id": "925c94d0-5d51-46b2-bc12-42af8b82e9af",
+      "name": "Create an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "ZLXU5w2kdLMVMhvk",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool whenever the user wants to:\n\n- Read emails\nRead only the 5 most recent unread emails. Return a brief summary including sender, subject, and a one-line summary. Never read the entire inbox unless the user explicitly requests it.\nRead the user's unread Gmail messages.\n\n\nNever retrieve the entire inbox unless the user explicitly asks.\n- Summarize emails\n- Find unread emails\n- Search Gmail\n- Find emails from a specific sender\n- Find today's emails\n\nExamples:\n- unread emails\n- latest emails\n- emails from Google\n- invoices\n- Amazon orders",
+        "operation": "getAll",
+        "limit": 10,
+        "filters": {
+          "q": "is:unread newer_than:7d}",
+          "readStatus": "unread",
+          "receivedAfter": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Received_After', ``, 'string') }}",
+          "sender": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Sender', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        -32,
+        288
+      ],
+      "id": "4d35062b-db62-4bcc-98c8-7c3a1aef20d5",
+      "name": "Gmail - Read",
+      "webhookId": "05e6f005-a17f-4787-9e85-994bbd48e7ee",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "J0DJGvmbC5XJ2NLv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool whenever the user wants to:\n\n- Send an email\n- Draft an email\n- Reply to an email\n- Share a document\n- Share a calendar event\n\nAlways compose a professional email.",
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "bccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('BCC', ``, 'string') }}",
+          "ccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CC', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        32,
+        400
+      ],
+      "id": "c99cbf36-4d9f-479c-9c98-1bf31b2ce7a6",
+      "name": "Gmail - Send",
+      "webhookId": "05e6f005-a17f-4787-9e85-994bbd48e7ee",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "J0DJGvmbC5XJ2NLv",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "session_groq_fix_re",
+        "contextWindowLength": 2
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -320,
+        240
+      ],
+      "id": "57f8be26-758f-4603-8ebf-6285d5abab14",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use this tool whenever the user wants to:\n\n- Save a file\n- Upload a file\n- Store a report\n- Move a document\n- Organize files\n\nChoose an appropriate filename.",
+        "operation": "createFromText",
+        "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('File_Content', ``, 'string') }}",
+        "name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('File_Name', ``, 'string') }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        -96,
+        384
+      ],
+      "id": "2f2e421e-d41a-4a83-bba7-662801a52ee7",
+      "name": "Create file from text in Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "L9XfA3fz9SnMu7Tc",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Creates a new Google Spreadsheet.\n\nUse this tool ONLY when the user explicitly asks to create a new spreadsheet.\n\nExamples:\n- Create a study tracker spreadsheet.\n- Create a budget spreadsheet.\n- Create an attendance sheet.\n- Create a project tracker.\n\nDo NOT use this tool for:\n- Remembering user information\n- Storing long-term memory\n- Creating Google Documents\n- Logging AI memory\n- Tasks that do not explicitly require a new spreadsheet",
+        "resource": "spreadsheet",
+        "title": "LifePilot Study Planner",
+        "sheetsUi": {
+          "sheetValues": [
+            {
+              "title": "Study Plan"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        864,
+        304
+      ],
+      "id": "bd94c5c5-09d2-4a49-abf2-a566ab9fc37c",
+      "name": "Create spreadsheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "COcIsaNLIrxN3mMN",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Appends a new row to an existing Google Sheet.\n\nUse this tool ONLY when the user explicitly wants to:\n- Record structured data\n- Log information\n- Track progress\n- Save tabular records\n- Maintain spreadsheets\n\nExamples:\n- Log today's study hours.\n- Record my daily expenses.\n- Add a new task to my tracker.\n- Save today's workout.\n\nDo NOT use this tool for:\n- Remembering long-term user preferences\n- Saving personal memory\n- Creating documents\n- Creating new spreadsheets\n- Tasks that do not explicitly require updating an existing spreadsheet\n\nFor long-term user memory, use the Memory Service instead.",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1BC0Ye-o8XiKwNxYmxEjFO7znjFMW_RPYvJk1yUD65MY",
+          "mode": "list",
+          "cachedResultName": "LifePilot Study Planner OG",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1BC0Ye-o8XiKwNxYmxEjFO7znjFMW_RPYvJk1yUD65MY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 648739494,
+          "mode": "list",
+          "cachedResultName": "Study Plan",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1BC0Ye-o8XiKwNxYmxEjFO7znjFMW_RPYvJk1yUD65MY/edit#gid=648739494"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Day": "Monday",
+            "Subject": "Data Structures",
+            "Duration": "2 Hours",
+            "Status": "Pending"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Day",
+              "displayName": "Day",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Duration",
+              "displayName": "Duration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        720,
+        336
+      ],
+      "id": "c93b6e64-efa2-4430-98e8-a4b79499e9a8",
+      "name": "Append row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "COcIsaNLIrxN3mMN",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Creates or updates Google Documents.\n\nUse this tool when the user wants a document such as:\n- Email summaries\n- Reports\n- Meeting notes\n- Study notes\n- Articles\n- Plans\n- Itineraries\n\nAlways generate the complete title and content before calling this tool.\n\nDo NOT use this tool for:\n- Remembering user information\n- Logging spreadsheet data\n- Creating spreadsheets\n- Sending emails\n- Managing calendar events",
+        "workflowId": {
+          "__rl": true,
+          "value": "zrYVYsccXjgWb7ub",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/zrYVYsccXjgWb7ub",
+          "cachedResultName": "LifePilot - Google Docs Service"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('title', `The title of the Google Document, for example \"Unread Emails Summary\".`, 'string') }}",
+            "content": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('content', `The complete text that should be written into the Google Document. This must contain the full generated response, not be left empty.`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        320
+      ],
+      "id": "db9447d3-67ea-418b-83be-166c3912fe50",
+      "name": "Call 'LifePilot - Google Docs Service'"
+    },
+    {
+      "parameters": {
+        "description": "Retrieves information previously stored in the user's long-term memory.\n\nUse this tool whenever the user asks about something they have previously asked you to remember.\n\nExamples:\n- What is my preferred study time?\n- What is my career goal?\n- What project am I working on?\n- What is my favorite programming language?\n- What do you remember about me?\n\nInput:\n- key: a short snake_case identifier representing the memory to retrieve.\n\nExamples of keys:\npreferred_study_time\ncareer_goal\ncurrent_project\nfavorite_programming_language\n\nDo NOT use this tool for creating documents, spreadsheets, emails, calendar events, or saving new memories.",
+        "workflowId": {
+          "__rl": true,
+          "value": "u78qf1tNodCFI3sH",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/u78qf1tNodCFI3sH",
+          "cachedResultName": "LifePilot - Memory Read"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "key": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('key', `Generate the appropriate snake_case key that matches the user's request.\n\nExamples:\n\"What is my preferred study time?\"\n→ preferred_study_time\n\n\"What is my favorite programming language?\"\n→ favorite_programming_language\n\n\"What project am I working on?\"\n→ current_project`, 'string') }}"
+          },
+          "matchingColumns": [
+            "key"
+          ],
+          "schema": [
+            {
+              "id": "key",
+              "displayName": "key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -144,
+        256
+      ],
+      "id": "f1bfc390-a131-415a-aa42-cf56b06c8897",
+      "name": "Call 'LifePilot - Memory Read'"
+    },
+    {
+      "parameters": {
+        "description": "Stores information in the user's long-term memory.\n\nUse this tool only when the user explicitly wants you to remember something for future conversations.\n\nExamples:\n- Remember that my preferred study time is 7 PM.\n- Remember that my favorite programming language is Python.\n- Remember that I'm working on the LifePilot project.\n- My career goal is to become an AI Engineer.\n- Remember that I prefer dark mode.\n\nInput:\n- key: A short snake_case identifier.\n- value: The information to store.\n- category: One of Preference, Personal, Work, Study, Health, Finance, Project, or Other.\n\nExamples:\n\nUser: \"Remember that my favorite programming language is Python.\"\nkey: favorite_programming_language\nvalue: Python\ncategory: Preference\n\nUser: \"Remember that I'm working on the LifePilot project.\"\nkey: current_project\nvalue: LifePilot\ncategory: Project\n\nDo NOT use this tool when the user is asking to retrieve, update, or delete previously stored memories.",
+        "workflowId": {
+          "__rl": true,
+          "value": "n4DFejbm8GIr9gbL",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/n4DFejbm8GIr9gbL",
+          "cachedResultName": "LifePilot - Memory Save"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "key": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('key', `Generate a concise snake_case identifier for the memory.\n\nExamples:\nfavorite_programming_language\npreferred_study_time\ncareer_goal\ncurrent_project\nfavorite_editor\n\nThe key should be stable and descriptive.`, 'string') }}",
+            "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('value', `The exact information that should be remembered for future use.`, 'string') }}",
+            "category": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('category', `Choose the most appropriate category.\n\nAllowed values:\nPreference\nPersonal\nWork\nStudy\nProject\nHealth\nFinance\nOther`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "operation",
+              "displayName": "operation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "key",
+              "displayName": "key",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "value",
+              "displayName": "value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        384
+      ],
+      "id": "a2ab8554-b723-4ba3-83ad-74ce9f268bf6",
+      "name": "Call 'LifePilot - Memory Save'"
+    },
+    {
+      "parameters": {
+        "description": "Creates a task in LifePilot.\n\nUSE THIS TOOL whenever the user asks to:\n- create a task\n- make a task\n- add a task\n- schedule a task\n- create a reminder/task\n\nYou MUST call this tool when the user asks to create a task.\n\nRequired inputs:\ntitle\ndescription\npriority\ndue_date\n\nDo not just tell the user that the task was created.\nActually call this tool.",
+        "workflowId": {
+          "__rl": true,
+          "value": "GyWWQH0ApifJM7VW",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/GyWWQH0ApifJM7VW",
+          "cachedResultName": "LifePilot - Task Create"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('title', `The task title.`, 'string') }}",
+            "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('description', `A concise description of the task.`, 'string') }}",
+            "priority": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('priority', `The task priority. Must be exactly High, Medium, or Low.`, 'string') }}",
+            "due_date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('due_date', `The task due date and time formatted strictly as YYYY-MM-DD HH:mm (e.g., 2026-08-09 19:00)`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "due_date",
+              "displayName": "due_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        432
+      ],
+      "id": "5ff6e8c9-983f-4147-a2cb-3c57010c8ec2",
+      "name": "Call 'LifePilot - Task Create'"
+    },
+    {
+      "parameters": {
+        "description": "Retrieves the user's tasks.\n\nUse this tool whenever the user asks to view or list tasks.\n\nExamples:\n- What are my pending tasks?\n- Show my completed tasks.\n- List all tasks.\n- What tasks do I have today?\n\nInput:\nstatus = Pending, Completed, or All\n\nIf the user asks for pending tasks, use \"Pending\".\nIf the user asks for completed tasks, use \"Completed\".\nIf the user asks for all tasks, use \"All\".\n\nDo not use this tool to create, update, or delete tasks.",
+        "workflowId": {
+          "__rl": true,
+          "value": "lBTOtqjKeFVtl0xI",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/lBTOtqjKeFVtl0xI",
+          "cachedResultName": "LifePilot - Task Read"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('status', `Determine the task status from the user's request.\n\nExamples:\nPending\nCompleted\nAll`, 'string') }}"
+          },
+          "matchingColumns": [
+            "status"
+          ],
+          "schema": [
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        352
+      ],
+      "id": "db8322fe-399a-4baa-a5a7-5275ad73c7a8",
+      "name": "Call 'LifePilot - Task Read'"
+    },
+    {
+      "parameters": {
+        "description": "Marks a task as completed.\n\nUse when the user says:\n- Complete my DSA task.\n- I finished revising DSA.\n- Mark my resume task as done.\n\nInput:\ntitle = The task title.",
+        "workflowId": {
+          "__rl": true,
+          "value": "R7VGQXJ3YlG5PzVw",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/R7VGQXJ3YlG5PzVw",
+          "cachedResultName": "LifePilot - Task Complete"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('title', `The exact title of the task that should be marked as completed.\n\nUse the task title provided by the user exactly as written.\nDo not invent or modify the title.\n\nExample:\nIf the user says \"Mark Date Test as completed\", use:\nDate Test`, 'string') }}"
+          },
+          "matchingColumns": [
+            "title"
+          ],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        544,
+        416
+      ],
+      "id": "0f3c41cc-6e86-4074-8019-a0a4dcebb6e4",
+      "name": "Call 'LifePilot - Task Complete'"
+    },
+    {
+      "parameters": {
+        "description": "Marks a task as deleted.\n\nUse this tool when the user asks to:\n- Delete a task\n- Remove a task\n- Cancel a task\n- Discard a task\n\nInput:\ntitle = Exact task title",
+        "workflowId": {
+          "__rl": true,
+          "value": "3Y5UYR2GDYfE6BeQ",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/3Y5UYR2GDYfE6BeQ",
+          "cachedResultName": "LifePilot - Task Delete"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('title', `Extract the exact title of the task the user wants to delete.\n\nReturn only the task title as stored in the task database.\n\nExamples:\n\"Delete my DSA task.\" → \"Revise DSA\"\n\"Remove my resume task.\" → \"Finish Resume\"\n\"Cancel my project task.\" → \"Complete Project\"`, 'string') }}"
+          },
+          "matchingColumns": [
+            "title"
+          ],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        288
+      ],
+      "id": "6cc2ce98-7438-4178-844e-5e5c5e6c27d7",
+      "name": "Call 'LifePilot - Task Delete'"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        0
+      ],
+      "id": "97bc8793-de42-4830-9826-d7e1e1c5ce90",
+      "name": "Webhook",
+      "webhookId": "35e65e29-d1e9-4267-956e-e284ab66fe78"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5b4726fe-6528-44c7-8774-a1c42bdb78ee",
+              "name": "currentDate",
+              "value": "={{ $now.setZone('Asia/Kolkata').toFormat('yyyy-MM-dd') }}",
+              "type": "string"
+            },
+            {
+              "id": "0b8fd02d-527f-4e2c-b53e-bcaeb4bd7c08",
+              "name": "currentTime",
+              "value": "={{ $now.setZone('Asia/Kolkata').toFormat('HH:mm') }}",
+              "type": "string"
+            },
+            {
+              "id": "14bf6dd0-985e-4ae1-91a8-d2a005546544",
+              "name": "timezone",
+              "value": "Asia/Kolkata",
+              "type": "string"
+            },
+            {
+              "id": "63792214-a08b-40a2-85d2-a36c9cadf2c0",
+              "name": "tomorrowDate",
+              "value": "={{ $now.plus({ days: 1 }).format('yyyy-MM-dd') }}",
+              "type": "string"
+            },
+            {
+              "id": "ec0423e7-fb55-4f0f-96ac-b79c4d2a628f",
+              "name": "tomorrowAt7PM",
+              "value": "={{ $now.plus({ days: 1 }).set({ hour: 19, minute: 0, second: 0 }).toFormat('yyyy-MM-dd HH:mm') }}",
+              "type": "string"
+            },
+            {
+              "id": "05c55158-b94a-469b-8faa-b075f6f92ce3",
+              "name": "chatInput",
+              "value": "={{ $json.body.chatInput }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fb5ba2e7-5ab7-4652-a9a1-e125d8e5595c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        192
+      ],
+      "id": "6a60fd56-5364-426a-b85f-ab9243ac20bf",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "hoKUj7GW867zTezt",
+          "name": "Groq account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ output: $json.output }) }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "http://localhost:3000"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "8f05af45-b8ba-498f-987d-8d52de8cf360",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "Create an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail - Send": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail - Read": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create file from text in Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create spreadsheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'LifePilot - Google Docs Service'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'LifePilot - Memory Read'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'LifePilot - Memory Save'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'LifePilot - Task Create'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'LifePilot - Task Read'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'LifePilot - Task Complete'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'LifePilot - Task Delete'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "0b69775c-10e7-4295-9ae3-b2c3c775c25b",
+  "activeVersionId": "0b69775c-10e7-4295-9ae3-b2c3c775c25b",
+  "versionCounter": 745,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-07-31T17:42:08.162Z",
+      "createdAt": "2026-07-31T17:42:08.162Z",
+      "role": "workflow:owner",
+      "workflowId": "iIDeXVMThn1Fgfoa",
+      "projectId": "ATf8yI9oXmo7oM2E",
+      "project": {
+        "updatedAt": "2026-07-31T17:36:01.364Z",
+        "createdAt": "2026-07-31T17:19:50.159Z",
+        "id": "ATf8yI9oXmo7oM2E",
+        "name": "Shreya Pandey <shreyapandey.tech@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "9f594285-a90e-4a3a-84d3-8af680fd21b4"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "Version 0b69775c",
+    "description": ""
+  }
+}

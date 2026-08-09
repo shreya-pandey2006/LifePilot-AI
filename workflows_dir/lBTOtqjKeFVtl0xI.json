@@ -1,0 +1,129 @@
+{
+  "updatedAt": "2026-08-02T12:19:35.051Z",
+  "createdAt": "2026-08-02T10:30:00.731Z",
+  "id": "lBTOtqjKeFVtl0xI",
+  "name": "LifePilot - Task Read",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "status"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4a4ac858-cf97-4978-bcee-990c6e158b7f",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg",
+          "mode": "list",
+          "cachedResultName": "LifePilot Tasks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Tasks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1l2-nKKHbWNjwlC36ftGWniNehBB_BrVGF11WrBE0Zrg/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status",
+              "lookupValue": "={{ $('When Executed by Another Workflow').item.json.status }}"
+            },
+            {
+              "lookupColumn": "is_deleted",
+              "lookupValue": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "ffcdeb41-f055-4882-bb2e-10e446b1890d",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "COcIsaNLIrxN3mMN",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "8dc356fa-722b-4071-833c-d8cd18fada84",
+  "activeVersionId": "8dc356fa-722b-4071-833c-d8cd18fada84",
+  "versionCounter": 20,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-08-02T10:30:00.737Z",
+      "createdAt": "2026-08-02T10:30:00.737Z",
+      "role": "workflow:owner",
+      "workflowId": "lBTOtqjKeFVtl0xI",
+      "projectId": "ATf8yI9oXmo7oM2E",
+      "project": {
+        "updatedAt": "2026-07-31T17:36:01.364Z",
+        "createdAt": "2026-07-31T17:19:50.159Z",
+        "id": "ATf8yI9oXmo7oM2E",
+        "name": "Shreya Pandey <shreyapandey.tech@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "9f594285-a90e-4a3a-84d3-8af680fd21b4"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "Version 8dc356fa",
+    "description": ""
+  }
+}

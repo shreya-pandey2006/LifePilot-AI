@@ -1,0 +1,146 @@
+{
+  "updatedAt": "2026-08-08T13:31:32.996Z",
+  "createdAt": "2026-08-01T19:50:53.868Z",
+  "id": "zrYVYsccXjgWb7ub",
+  "name": "LifePilot - Google Docs Service",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "title"
+            },
+            {
+              "name": "content"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -224,
+        -48
+      ],
+      "id": "3623e296-dcd0-47cb-8447-a882b1a8e1c0",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "folderId": "default",
+        "title": "={{ $json.title }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        -48
+      ],
+      "id": "1c02fbdc-168e-4ac1-b5cd-76b5e81c0212",
+      "name": "Create a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "psgLujsqLQSnjz81",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('Create a document').item.json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('When Executed by Another Workflow').item.json.content }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        176,
+        -48
+      ],
+      "id": "8251fb89-610e-4055-be3b-1fec2071b11a",
+      "name": "Update a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "psgLujsqLQSnjz81",
+          "name": "Google Docs account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Create a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a document": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "d65ad141-e054-4ccb-88ca-4f460460dac6",
+  "activeVersionId": "d65ad141-e054-4ccb-88ca-4f460460dac6",
+  "versionCounter": 33,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-08-01T19:50:53.870Z",
+      "createdAt": "2026-08-01T19:50:53.870Z",
+      "role": "workflow:owner",
+      "workflowId": "zrYVYsccXjgWb7ub",
+      "projectId": "ATf8yI9oXmo7oM2E",
+      "project": {
+        "updatedAt": "2026-07-31T17:36:01.364Z",
+        "createdAt": "2026-07-31T17:19:50.159Z",
+        "id": "ATf8yI9oXmo7oM2E",
+        "name": "Shreya Pandey <shreyapandey.tech@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "9f594285-a90e-4a3a-84d3-8af680fd21b4"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "Version d65ad141",
+    "description": ""
+  }
+}

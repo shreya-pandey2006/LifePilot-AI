@@ -4,15 +4,17 @@ export interface ChatResponse {
 
 export const sendMessageToLifePilot = async (userMessage: string): Promise<string> => {
   try {
-    const response = await fetch('http://localhost:5678/webhook/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chatInput: userMessage,
-      }),
-    });
+    const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || 'https://lifepilot-n8n.onrender.com/webhook/lifepilot-ai';
+
+const response = await fetch(webhookUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    chatInput: userMessage,
+  }),
+});
 
     if (!response.ok) {
       throw new Error(`Server returned status ${response.status}`);
