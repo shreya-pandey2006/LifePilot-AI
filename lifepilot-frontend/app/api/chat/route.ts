@@ -1,18 +1,18 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Replace this with the exact Production Webhook URL from n8n
+    // Use your deployed n8n webhook URL
     const n8nWebhookUrl =
       process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL ||
-      'https://lifepilot-n8n.onrender.com/webhook/chat';
+      "https://lifepilot-n8n.onrender.com/webhook/chat";
 
     const response = await fetch(n8nWebhookUrl, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
     });
@@ -24,9 +24,11 @@ export async function POST(req: Request) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Proxy route error:', error);
+    console.error("Proxy route error:", error);
     const errorMessage =
-      error instanceof Error ? error.message : 'Failed to communicate with n8n backend';
+      error instanceof Error
+        ? error.message
+        : "Failed to communicate with n8n backend";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
