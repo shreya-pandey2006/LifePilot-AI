@@ -1,9 +1,8 @@
 "use client";
 
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { ChatMessage } from '@/types/chat';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { ChatMessage } from "@/types/chat";
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -16,18 +15,18 @@ export default function MessageList({ messages }: MessageListProps) {
         <div
           key={message.id}
           className={`flex ${
-            message.role === 'user' ? 'justify-end' : 'justify-start'
+            message.role === "user" ? "justify-end" : "justify-start"
           }`}
         >
           <div
             className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-              message.role === 'user'
-                ? 'bg-blue-600 text-white'
-                : 'bg-zinc-800 text-zinc-100'
+              message.role === "user"
+                ? "bg-blue-600 text-white"
+                : "bg-zinc-800 text-zinc-100"
             }`}
           >
-            {message.role === 'assistant' ? (
-              <div className="prose prose-invert max-w-none text-sm leading-relaxed whitespace-pre-wrap">
+            {message.role === "assistant" ? (
+              <div className="prose prose-invert max-w-none text-sm leading-relaxed">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {message.content}
                 </ReactMarkdown>

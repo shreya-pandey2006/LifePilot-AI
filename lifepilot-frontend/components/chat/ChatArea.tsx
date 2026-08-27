@@ -39,8 +39,6 @@ export default function ChatArea() {
       // Send message to n8n backend
       const aiReply = await sendMessageToLifePilot(userText);
 
-      console.log("API Response:", aiReply);
-
       const assistantMessage: ChatMessage = {
         id: Date.now() + 1,
         role: "assistant",
@@ -54,7 +52,10 @@ export default function ChatArea() {
       const errorMessage: ChatMessage = {
         id: Date.now() + 1,
         role: "assistant",
-        content: "⚠️ Sorry, I couldn't connect to the LifePilot backend.",
+        content:
+          error instanceof Error
+            ? `⚠️ ${error.message}`
+            : "⚠️ Sorry, I couldn't connect to the LifePilot backend.",
       };
 
       setMessages((prev) => [...prev, errorMessage]);
@@ -64,7 +65,10 @@ export default function ChatArea() {
   }
 
   return (
-    <div className="flex flex-1 flex-col h-full">
+    // min-h-0 is required here: without it, a flex child with
+    // overflow-y-auto (MessageList) refuses to shrink below its content
+    // height, and the whole page scrolls instead of just the chat pane.
+    <div className="flex flex-1 flex-col h-full min-h-0">
       <Header />
 
       <MessageList messages={messages} />
@@ -73,6 +77,7 @@ export default function ChatArea() {
         input={input}
         setInput={setInput}
         onSend={handleSend}
+        isLoading={isLoading}
       />
     </div>
   );
