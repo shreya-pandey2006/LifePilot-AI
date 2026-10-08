@@ -2,13 +2,10 @@ type ChatInputProps = {
   input: string;
   setInput: (value: string) => void;
   onSend: () => void;
+  isLoading?: boolean;
 };
 
-export default function ChatInput({
-  input,
-  setInput,
-  onSend,
-}: ChatInputProps) {
+export default function ChatInput({ input, setInput, onSend, isLoading = false }: ChatInputProps) {
   return (
     <div className="w-full max-w-5xl mx-auto p-6">
       <div className="flex items-center rounded-3xl bg-zinc-900 border border-zinc-800 p-3">
@@ -25,9 +22,10 @@ export default function ChatInput({
 
         <button
           onClick={onSend}
-          className="ml-3 rounded-xl bg-white text-black px-4 py-2 font-medium hover:bg-zinc-200 transition"
+          disabled={isLoading}
+          className="ml-3 rounded-xl bg-white text-black px-4 py-2 font-medium hover:bg-zinc-200 transition disabled:opacity-50"
         >
-          Send
+          {isLoading ? "…" : "Send"}
         </button>
       </div>
     </div>
